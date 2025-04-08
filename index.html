@@ -1,322 +1,311 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Brasas Vivas - Hinos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/88d2e5a43a.js" crossorigin="anonymous"></script>
   <style>
-    * { box-sizing: border-box; }
-
+    /* Seu estilo permanece igual */
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #e0f7fa, #ffffff);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: start;
-      min-height: 100vh;
-    }
-
-    .app-container {
-      background: #fff;
-      margin: 30px;
-      width: 100%;
-      max-width: 500px;
-      border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      color: #0d47a1;
-      margin-bottom: 10px;
-    }
-
-    h3 {
-      color: #0d47a1;
-      margin-top: 30px;
-    }
-
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #29b6f6;
-    }
-
-    button {
-      background-color: #0d47a1;
-      color: white;
-      border: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #1565c0;
-    }
-
-    .logout-btn {
-      background-color: #ff7043;
-    }
-
-    .logout-btn:hover {
-      background-color: #ff5722;
-    }
-
-    .item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f4f6f8;
-      padding: 10px 15px;
-      margin: 5px 0;
-      border-radius: 8px;
-    }
-
-    .item span {
-      font-size: 15px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffe0b2);
       color: #333;
+      margin: 0;
+      padding: 20px;
     }
-
-    .item i {
-      cursor: pointer;
-      color: #d32f2f;
-      font-size: 18px;
-      margin-left: 10px;
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
-
-    .edit-section {
-      background: #e3f2fd;
-      padding: 15px;
-      border-radius: 10px;
+    h2, h3 { color: #0288d1; }
+    input, button {
+      width: 100%; padding: 10px; margin: 10px 0;
+      border-radius: 10px; border: 1px solid #ccc;
+      font-size: 16px;
     }
-
-    .inline-icon {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    button {
+      background-color: #ffa726; color: white;
+      border: none; cursor: pointer;
+      transition: background 0.3s ease;
     }
+    button:hover { background-color: #fb8c00; }
+    .hidden { display: none; }
+    ul { list-style: none; padding: 0; }
+    li {
+      background: #e3f2fd; margin: 10px 0; padding: 15px;
+      border-radius: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .actions button, .user-delete-btn {
+      width: auto; margin-left: 5px; padding: 5px 10px; font-size: 14px;
+    }
+    .modal-overlay {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    }
+    .modal {
+      background: white; padding: 30px; border-radius: 20px;
+      text-align: center; max-width: 300px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+    .modal h4 { margin-bottom: 20px; color: #0288d1; }
+    .modal input { width: 100%; padding: 10px; margin: 10px 0; }
+    .modal button {
+      margin: 5px; width: auto; padding: 8px 16px;
+    }
+    .logout-btn {
+      margin-top: 20px; background-color: #0288d1;
+    }
+    .logout-btn:hover { background-color: #0277bd; }
   </style>
 </head>
 <body>
-  <div class="app-container" id="app">Carregando...</div>
+  <div class="container">
+    <h2 id="loginTitle">  🔥 Brasas Vivas - Hinos 🎶</h2>
+    <div id="loginSection">
+      <input type="text" id="username" placeholder="Usuário">
+      <input type="password" id="password" placeholder="Senha">
+      <button onclick="login()">Entrar</button>
+    </div>
+
+    <div id="mainSection" class="hidden">
+      <h2 id="welcome"></h2>
+      <button class="logout-btn" onclick="logout()">Sair</button>
+
+      <div>
+        <h3>Alterar Nome e Senha</h3>
+        <input type="text" id="newUsername" placeholder="Novo nome de usuário">
+        <input type="password" id="newPassword" placeholder="Nova senha">
+        <button onclick="updateCredentials()">Alterar</button>
+      </div>
+
+      <div id="adminSection" class="hidden">
+        <h3>Criar Novo Usuário</h3>
+        <input type="text" id="createUsername" placeholder="Novo usuário">
+        <input type="password" id="createPassword" placeholder="Senha">
+        <button onclick="createUser()">Criar</button>
+
+        <h3>Buscar Usuário</h3>
+        <input type="text" id="searchUser" oninput="filterUsers()" placeholder="Buscar usuário">
+        <ul id="userList"></ul>
+      </div>
+
+      <h3>Cadastrar Hino</h3>
+      <input type="text" id="hymnTitle" placeholder="Título do Hino">
+      <button onclick="addHymn()">Cadastrar</button>
+
+      <h3>Buscar Hino</h3>
+      <input type="text" id="searchHymn" oninput="renderHymns()" placeholder="Buscar hino">
+      <ul id="hymnList"></ul>
+    </div>
+
+    <div id="modalContainer" class="hidden"></div>
+  </div>
 
   <script>
+    const BIN_ID = "67f51ca48561e97a50fb03bf";
     const API_KEY = "$2a$10$.Kqx5UYDNdvniDVaS7JDTOWVBgcpc.e9GN/eAh8d7oUK2ISL2iMqC";
-    const BIN_ID = "67f1e1038960c979a57f099c";
     const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+    const HEADERS = {
+      "Content-Type": "application/json",
+      "X-Master-Key": API_KEY
+    };
 
-    let app = document.getElementById("app");
     let currentUser = null;
-    let users = {};
-    let hinos = [];
+    let users = [];
+    let hymns = [];
 
-    async function fetchData() {
-      const res = await fetch(BASE_URL, {
-        headers: { 'X-Master-Key': API_KEY }
-      });
-      const data = await res.json();
-
-      // Atualiza formato antigo para novo (caso necessário)
-      const oldUsers = data.record.users;
-      users = {};
-      for (let user in oldUsers) {
-        if (typeof oldUsers[user] === 'string') {
-          users[user] = { senha: oldUsers[user], admin: user === 'kauan' };
-        } else {
-          users[user] = oldUsers[user];
-        }
-      }
-
-      hinos = data.record.hinos || [];
+    async function loadData() {
+      const res = await fetch(BASE_URL, { headers: HEADERS });
+      const json = await res.json();
+      users = json.record.usuarios || [];
+      hymns = json.record.hinos || [];
     }
 
     async function saveData() {
-      const data = { users, hinos };
       await fetch(BASE_URL, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Master-Key': API_KEY
-        },
-        body: JSON.stringify(data)
+        method: "PUT",
+        headers: HEADERS,
+        body: JSON.stringify({ usuarios: users, hinos: hymns })
       });
     }
 
-    function isAdmin() {
-      return users[currentUser]?.admin === true;
-    }
-
-    function renderLogin() {
-      app.innerHTML = `
-        <h2>🎵 Brasas Vivas</h2>
-        <input id="username" placeholder="Usuário">
-        <input id="password" type="password" placeholder="Senha">
-        <button onclick="login()">Entrar</button>
-      `;
-    }
-
-    function login() {
-      const user = document.getElementById("username").value.trim();
-      const pass = document.getElementById("password").value.trim();
-      if (users[user] && users[user].senha === pass) {
-        currentUser = user;
-        renderMain();
+    async function login() {
+      await loadData();
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+      const found = users.find(user => user.username === u && user.password === p);
+      if (found) {
+        currentUser = found;
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('mainSection').classList.remove('hidden');
+        document.getElementById('welcome').innerText = `Bem-vindo, ${found.username}`;
+        document.getElementById('adminSection').classList.toggle('hidden', found.username !== "Kauan");
+        renderUsers();
+        renderHymns();
       } else {
-        alert("Usuário ou senha inválidos.");
+        alert("Usuário ou senha incorretos");
       }
     }
 
     function logout() {
       currentUser = null;
-      renderLogin();
+      document.getElementById('loginSection').classList.remove('hidden');
+      document.getElementById('mainSection').classList.add('hidden');
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
     }
 
-    function renderMain() {
-      let userSection = "";
-
-      if (isAdmin()) {
-        userSection += `
-          <h3>Gerenciar Usuários</h3>
-          <input id="newUser" placeholder="Novo usuário">
-          <input id="newPass" placeholder="Senha">
-          <button onclick="createUser()">Cadastrar</button>
-          <input id="searchUser" placeholder="Buscar usuário..." oninput="renderUserList()">
-          <div id="userList"></div>
-        `;
+    async function updateCredentials() {
+      const newU = document.getElementById('newUsername').value.trim();
+      const newP = document.getElementById('newPassword').value.trim();
+      if (newU && newP) {
+        currentUser.username = newU;
+        currentUser.password = newP;
+        await saveData();
+        alert("Dados atualizados!");
+        document.getElementById('welcome').innerText = `Bem-vindo, ${currentUser.username}`;
+        renderUsers();
       }
+    }
 
-      userSection += `
-        <h3>Editar Perfil</h3>
-        <div class="edit-section">
-          <input id="editName" placeholder="Novo nome de usuário">
-          <input id="editPass" placeholder="Nova senha">
-          <button onclick="updateUser()">Salvar alterações</button>
+    async function createUser() {
+      if (currentUser.username !== "Kauan") return;
+      const u = document.getElementById('createUsername').value.trim();
+      const p = document.getElementById('createPassword').value.trim();
+      if (u && p) {
+        users.push({ username: u, password: p });
+        await saveData();
+        renderUsers();
+      }
+    }
+
+    function filterUsers() {
+      if (currentUser.username !== "Kauan") return;
+      const query = document.getElementById('searchUser').value.toLowerCase();
+      renderUsers(query);
+    }
+
+    function renderUsers(filter = '') {
+      const list = document.getElementById('userList');
+      list.innerHTML = '';
+      users
+        .filter(u => u.username.toLowerCase().includes(filter))
+        .sort((a, b) => a.username.localeCompare(b.username))
+        .forEach(user => {
+          const li = document.createElement('li');
+          li.textContent = user.username;
+          if (currentUser.username === "Kauan" && user.username !== "Kauan") {
+            const delBtn = document.createElement('button');
+            delBtn.textContent = "Excluir";
+            delBtn.className = "user-delete-btn";
+            delBtn.onclick = () => showModal("Deseja excluir esse usuário?", async () => {
+              users = users.filter(u => u.username !== user.username);
+              await saveData();
+              renderUsers();
+            });
+            li.appendChild(delBtn);
+          }
+          list.appendChild(li);
+        });
+    }
+
+    async function addHymn() {
+      const title = document.getElementById('hymnTitle').value.trim();
+      if (title) {
+        hymns.push({ title });
+        await saveData();
+        renderHymns();
+        document.getElementById('hymnTitle').value = '';
+      }
+    }
+
+    function renderHymns() {
+      const list = document.getElementById('hymnList');
+      const search = document.getElementById('searchHymn')?.value.toLowerCase() || '';
+      list.innerHTML = '';
+      hymns
+        .filter(h => h.title.toLowerCase().includes(search))
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .forEach(hymn => {
+          const li = document.createElement('li');
+          const span = document.createElement('span');
+          span.textContent = hymn.title;
+          li.appendChild(span);
+
+          const actions = document.createElement('div');
+          actions.className = 'actions';
+
+          const editBtn = document.createElement('button');
+          editBtn.textContent = 'Editar';
+          editBtn.onclick = () => showEditModal(hymn);
+
+          const delBtn = document.createElement('button');
+          delBtn.textContent = 'Excluir';
+          delBtn.onclick = () => showModal("Deseja excluir esse hino?", async () => {
+            hymns = hymns.filter(h => h !== hymn);
+            await saveData();
+            renderHymns();
+          });
+
+          actions.appendChild(editBtn);
+          actions.appendChild(delBtn);
+          li.appendChild(actions);
+          list.appendChild(li);
+        });
+    }
+
+    function showModal(message, onConfirm) {
+      const modalContainer = document.getElementById('modalContainer');
+      modalContainer.innerHTML = `
+        <div class="modal-overlay">
+          <div class="modal">
+            <h4>${message}</h4>
+            <button onclick="document.getElementById('modalContainer').classList.add('hidden')">Cancelar</button>
+            <button onclick="confirmModal()">Confirmar</button>
+          </div>
         </div>
       `;
+      modalContainer.classList.remove('hidden');
+      window.confirmModal = async () => {
+        modalContainer.classList.add('hidden');
+        await onConfirm();
+      };
+    }
 
-      app.innerHTML = `
-        <h2>Olá, ${currentUser} 👋</h2>
-        ${userSection}
-        <h3>Lista de Hinos</h3>
-        <input id="hinoInput" placeholder="Novo hino...">
-        <button onclick="addHino()">Adicionar Hino</button>
-        <input id="searchHino" placeholder="Buscar hino..." oninput="renderHinoList()">
-        <div id="hinoList"></div>
-        <button class="logout-btn" onclick="logout()">Sair</button>
+    function showEditModal(hymn) {
+      const modalContainer = document.getElementById('modalContainer');
+      modalContainer.innerHTML = `
+        <div class="modal-overlay">
+          <div class="modal">
+            <h4>Editar Hino</h4>
+            <input type="text" id="editTitle" value="${hymn.title}">
+            <button onclick="document.getElementById('modalContainer').classList.add('hidden')">Cancelar</button>
+            <button onclick="confirmEdit('${hymn.title}')">Salvar</button>
+          </div>
+        </div>
       `;
-
-      renderUserList();
-      renderHinoList();
+      modalContainer.classList.remove('hidden');
     }
 
-    function createUser() {
-      const user = document.getElementById("newUser").value.trim();
-      const pass = document.getElementById("newPass").value.trim();
-      if (!user || !pass) return alert("Preencha todos os campos!");
-      if (users[user]) return alert("Usuário já existe.");
-      users[user] = { senha: pass, admin: false };
-      saveData();
-      alert("Usuário criado com sucesso!");
-      renderUserList();
-    }
-
-    function renderUserList() {
-      const query = document.getElementById("searchUser")?.value?.toLowerCase() || "";
-      let html = "";
-      Object.keys(users).forEach(user => {
-        if (user.toLowerCase().includes(query)) {
-          html += `
-            <div class="item">
-              <span>${user}</span>
-              ${isAdmin() && user !== currentUser && !users[user].admin ? `<i class="fas fa-trash-alt" onclick="deleteUser('${user}')" title="Excluir usuário"></i>` : ""}
-            </div>
-          `;
-        }
-      });
-      const list = document.getElementById("userList");
-      if (list) list.innerHTML = html;
-    }
-
-    function deleteUser(user) {
-      if (confirm(`Tem certeza que deseja excluir o usuário "${user}"?`)) {
-        delete users[user];
-        saveData();
-        alert(`Usuário "${user}" excluído.`);
-        renderUserList();
+    async function confirmEdit(oldTitle) {
+      const newTitle = document.getElementById('editTitle').value.trim();
+      const hymn = hymns.find(h => h.title === oldTitle);
+      if (hymn && newTitle) {
+        hymn.title = newTitle;
+        await saveData();
+        renderHymns();
+        document.getElementById('modalContainer').classList.add('hidden');
       }
     }
-
-    function addHino() {
-      const nome = document.getElementById("hinoInput").value.trim();
-      if (nome) {
-        hinos.push({ nome, autor: currentUser });
-        saveData();
-        document.getElementById("hinoInput").value = "";
-        renderHinoList();
-      }
-    }
-
-    function renderHinoList() {
-      const query = document.getElementById("searchHino")?.value?.toLowerCase() || "";
-      let html = "";
-
-      const sortedHinos = [...hinos].sort((a, b) =>
-        a.nome.localeCompare(b.nome, 'pt-BR', { numeric: true, sensitivity: 'base' })
-      );
-
-      sortedHinos.forEach((hino, index) => {
-        if (hino.nome.toLowerCase().includes(query)) {
-          html += `
-            <div class="item">
-              <div class="inline-icon">
-                <span>${hino.nome} (por ${hino.autor})</span>
-              </div>
-              <i class="fas fa-trash-alt" onclick="deleteHino(${index})" title="Excluir hino"></i>
-            </div>
-          `;
-        }
-      });
-
-      document.getElementById("hinoList").innerHTML = html;
-    }
-
-    function deleteHino(index) {
-      if (confirm("Tem certeza que deseja excluir este hino?")) {
-        hinos.splice(index, 1);
-        saveData();
-        alert("Hino excluído.");
-        renderHinoList();
-      }
-    }
-
-    function updateUser() {
-      const newName = document.getElementById("editName").value.trim();
-      const newPass = document.getElementById("editPass").value.trim();
-      if (!newName || !newPass) return alert("Preencha todos os campos.");
-      if (users[newName] && newName !== currentUser) return alert("Este nome já está em uso.");
-      const adminStatus = users[currentUser].admin;
-      delete users[currentUser];
-      users[newName] = { senha: newPass, admin: adminStatus };
-      currentUser = newName;
-      saveData();
-      alert("Dados atualizados com sucesso.");
-      renderMain();
-    }
-
-    fetchData().then(() => renderLogin());
   </script>
 </body>
 </html>
