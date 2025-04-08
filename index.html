@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Brasas Vivas - Hinos</title>
   <style>
-    /* Seu estilo permanece igual */
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to right, #e0f7fa, #ffe0b2);
@@ -40,9 +39,10 @@
       border-radius: 12px;
       display: flex; justify-content: space-between; align-items: center;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
     }
     .actions button, .user-delete-btn {
-      width: auto; margin-left: 5px; padding: 5px 10px; font-size: 14px;
+      width: auto; margin-left: 5px; padding: 4px 8px; font-size: 12px;
     }
     .modal-overlay {
       position: fixed; top: 0; left: 0;
@@ -69,7 +69,7 @@
 </head>
 <body>
   <div class="container">
-    <h2 id="loginTitle">  🔥 Brasas Vivas - Hinos 🎶</h2>
+    <h2 id="loginTitle">🔥 Brasas Vivas - Hinos 🎶</h2>
     <div id="loginSection">
       <input type="text" id="username" placeholder="Usuário">
       <input type="password" id="password" placeholder="Senha">
@@ -100,6 +100,7 @@
 
       <h3>Cadastrar Hino</h3>
       <input type="text" id="hymnTitle" placeholder="Título do Hino">
+      <input type="text" id="hymnLink" placeholder="Link do Hino (YouTube, site, etc)">
       <button onclick="addHymn()">Cadastrar</button>
 
       <h3>Buscar Hino</h3>
@@ -220,11 +221,13 @@
 
     async function addHymn() {
       const title = document.getElementById('hymnTitle').value.trim();
-      if (title) {
-        hymns.push({ title });
+      const link = document.getElementById('hymnLink').value.trim();
+      if (title && link) {
+        hymns.push({ title, link });
         await saveData();
         renderHymns();
         document.getElementById('hymnTitle').value = '';
+        document.getElementById('hymnLink').value = '';
       }
     }
 
@@ -238,7 +241,7 @@
         .forEach(hymn => {
           const li = document.createElement('li');
           const span = document.createElement('span');
-          span.textContent = hymn.title;
+          span.innerHTML = `<strong>${hymn.title}</strong><br><a href="${hymn.link}" target="_blank">Abrir Link</a>`;
           li.appendChild(span);
 
           const actions = document.createElement('div');
@@ -288,6 +291,7 @@
           <div class="modal">
             <h4>Editar Hino</h4>
             <input type="text" id="editTitle" value="${hymn.title}">
+            <input type="text" id="editLink" value="${hymn.link}">
             <button onclick="document.getElementById('modalContainer').classList.add('hidden')">Cancelar</button>
             <button onclick="confirmEdit('${hymn.title}')">Salvar</button>
           </div>
@@ -298,9 +302,11 @@
 
     async function confirmEdit(oldTitle) {
       const newTitle = document.getElementById('editTitle').value.trim();
+      const newLink = document.getElementById('editLink').value.trim();
       const hymn = hymns.find(h => h.title === oldTitle);
-      if (hymn && newTitle) {
+      if (hymn && newTitle && newLink) {
         hymn.title = newTitle;
+        hymn.link = newLink;
         await saveData();
         renderHymns();
         document.getElementById('modalContainer').classList.add('hidden');
